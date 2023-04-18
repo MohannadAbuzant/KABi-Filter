@@ -1,0 +1,81 @@
+@import "_globals";
+
+// .leadingText{
+//     z-index: 1;
+//     position: relative;
+// }
+
+.banner{
+        z-index: 1;
+    position: relative;
+    &:after{
+        background:url(../../public/static/images/bg-login.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        content:"";
+        width: 100%;
+        top: 0;
+        position: absolute;
+        height: 100%;
+        display: block;
+        z-index: -1;
+    }
+}
+.rotateRight{
+    &:after{
+        transform: rotateY(180deg);
+    }
+}
+
+.form {
+    .w300px{
+        width:300px !important
+    }
+    .passwordLabel {
+        label {
+            width: 100% !important;
+            & > div {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+    }
+
+        .formLabel{
+            position: relative;
+            display: inline-block;
+    
+            &::after{
+                content:"*";
+                color:red;
+                display: block;
+                position: absolute;
+                z-index: 2;
+                top: 2px;       
+            }
+
+        }
+        .right{
+            &::after{
+                right:-9px;
+            }
+        }
+        .left{
+            &::after{
+                left:-9px;
+            }
+        }
+    
+    .remember {
+            .ant-form-item-control-input-content{
+                display: flex !important;
+                justify-content: space-between !important;
+            }
+            div:last-child {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }

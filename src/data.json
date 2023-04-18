@@ -1,0 +1,37 @@
+[
+    {
+        "id":"1",
+        "jobTitle": "Product manager",
+        "reqType": "blabla bla",
+        "reqStatus":true,
+        "orgStructure" : "Sadeq org",
+        "Units" : ["unit1","unit2"],
+        "hiringManagers": ["Omar", "MAzen"],
+        "vacanciesBudget":1,
+        "vacanciesOpen":1,
+        "vacanciesField":0
+    },
+    {
+        "id":"2",
+        "jobTitle": "Product manager",
+        "reqType": "new Vacancy",
+        "reqStatus":false,
+        "orgStructure" : "Sadeq org",
+        "Units" : ["unit1","unit2"],
+        "hiringManagers": ["abdfawwaz", "ahmadjallad"],
+        "vacanciesBudget":1,
+        "vacanciesOpen":1,
+        "vacanciesField":0
+    },    {
+        "id":"3",
+        "jobTitle": "Product manager",
+        "reqType": "new Vacancy",
+        "reqStatus":false,
+        "orgStructure" : "Sadeq org",
+        "Units" : ["unit1","unit2"],
+        "hiringManagers": ["abdfawwaz", "ahmadjallad"],
+        "vacanciesBudget":1,
+        "vacanciesOpen":1,
+        "vacanciesField":0
+    }
+]
