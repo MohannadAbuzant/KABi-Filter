@@ -1,3 +1,9 @@
+@import "_globals";
 body{
     margin:0;
+}
+
+.ant-collapse-header{
+    background-color:$colorSecoundry !important;
+    border-radius: 6px !important;
 }

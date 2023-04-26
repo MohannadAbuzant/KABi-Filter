@@ -8,6 +8,7 @@ import data from  "@/data.json"
 import { cardPropsTypes } from "@/types/card";
 import CreateForm from './createForm';
 import { LangContext } from '@/contexts/lang';
+import Filter from './filterDrawer';
 
 const {useBreakpoint} = Grid
 
@@ -101,8 +102,10 @@ const Dashboard = () => {
     const setValue=(value:string)=>{
         setSearchValue(value)
     }
+
     return (
         <>
+            <Filter />
             <CreateForm setOpen={setOpen} open={open} setDataCard={setDataCard}/>
             <Row  gutter={[0,10]} className={`${styles.my1} ${styles.mx1}`}>
                 <Col span={24}>

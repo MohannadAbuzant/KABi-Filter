@@ -9,7 +9,12 @@
         "hiringManagers": ["Omar", "MAzen"],
         "vacanciesBudget":1,
         "vacanciesOpen":1,
-        "vacanciesField":0
+        "vacanciesField":0,
+        "sector":"Administration",
+        "functionalarea":"Production",
+        "jobType":"full time",
+        "published_date":"10/4/2023"
+
     },
     {
         "id":"2",
@@ -21,8 +26,13 @@
         "hiringManagers": ["abdfawwaz", "ahmadjallad"],
         "vacanciesBudget":1,
         "vacanciesOpen":1,
-        "vacanciesField":0
-    },    {
+        "vacanciesField":0,
+        "sector":"Retail",
+        "functionalarea":"FreeLancing",
+        "jobType":"full time",
+        "published_date":"10/3/2023"
+    },
+        {
         "id":"3",
         "jobTitle": "Product manager",
         "reqType": "new Vacancy",
@@ -32,6 +42,27 @@
         "hiringManagers": ["abdfawwaz", "ahmadjallad"],
         "vacanciesBudget":1,
         "vacanciesOpen":1,
-        "vacanciesField":0
+        "vacanciesField":0,
+        "sector":"Computer Software",
+        "functionalarea":"Human Resources",
+        "jobType":"part time",
+        "published_date":"5/4/2023"
+    },
+    {
+        "id":"4",
+        "jobTitle": "Product manager",
+        "reqType": "blabla bla",
+        "reqStatus":true,
+        "orgStructure" : "Sadeq org",
+        "Units" : ["unit1","unit2"],
+        "hiringManagers": ["osama", "MAzen"],
+        "vacanciesBudget":1,
+        "vacanciesOpen":1,
+        "vacanciesField":0,
+        "sector":"Administration",
+        "functionalarea":"Production",
+        "jobType":"full time",
+        "published_date":"10/4/2023"
+
     }
 ]

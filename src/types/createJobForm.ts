@@ -12,5 +12,9 @@ export type CreateFormProps={
         vacanciesBudget: number;
         vacanciesOpen: number;
         vacanciesField: number;
+       sector:string,
+       functionalarea:string,
+       jobType:string,
+       published_date:string
     }[]>>
 }
