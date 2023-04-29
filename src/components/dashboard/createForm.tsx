@@ -2,11 +2,11 @@ import * as React from "react";
 import { Form, Input, Select, Checkbox, Button, Modal, Grid } from "antd";
 import { CreateFormProps } from "@/types/createJobForm";
 
-const CreateForm = ({open,setOpen,setDataCard}: CreateFormProps) => {
+const CreateForm = ({open,setOpen,setData}: CreateFormProps) => {
     
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
-    setDataCard(prevData => [{...values,id: prevData.length+1},...prevData])
+    setData(prevData => [{...values,id: prevData.length+1},...prevData])
     form.resetFields()
     setOpen(false)
   }

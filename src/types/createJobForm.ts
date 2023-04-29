@@ -1,7 +1,7 @@
 export type CreateFormProps={
     open:boolean,
     setOpen:React.Dispatch<React.SetStateAction<boolean>>,
-    setDataCard:React.Dispatch<React.SetStateAction<{
+    setData:React.Dispatch<React.SetStateAction<{
         id: string;
         jobTitle: string;
         reqType: string;

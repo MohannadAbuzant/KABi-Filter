@@ -4,17 +4,19 @@ import {SearchOutlined, ReloadOutlined,FilterOutlined, MoreOutlined, DownloadOut
 import styles from "@/styles/dashboard.module.scss"
 import JobCard from "./card";
 import type { MenuProps } from 'antd';
-import data from  "@/data.json"
+import d from  "@/data.json"
 import { cardPropsTypes } from "@/types/card";
 import CreateForm from './createForm';
 import { LangContext } from '@/contexts/lang';
 import Filter from './filterDrawer';
+import { dataType } from '@/types/dataType';
 
 const {useBreakpoint} = Grid
 
 const Dashboard = () => {
+    const [data, setData] = React.useState<dataType>(d)
     const [open, setOpen] = React.useState(false);
-    const [dataCard,setDataCard] = React.useState(data);
+    const [filterOpen, setFilterOpen] = React.useState<boolean>(false)
     const [options, setOptions] = React.useState<{}[]>();
     const {t} = React.useContext(LangContext)
     const [searchValue, setSearchValue] = React.useState<string>()
@@ -68,13 +70,13 @@ const Dashboard = () => {
     }
 
     const deleteItem =(id:string)=>{
-        const newData = dataCard.filter(item=>{
+        const newData = data.filter(item=>{
             return item.id != id
         })
-        setDataCard(newData)
+        setData(newData)
     }
     const onSearch=(value:string)=>{
-        const opt = dataCard.filter(item=>{
+        const opt = data.filter(item=>{
             return item.jobTitle.toLowerCase().includes(value.toLowerCase())
         }).reduce((arr,item)=>{
             if(!arr.some(ar=>ar.label == item.jobTitle)){
@@ -89,14 +91,14 @@ const Dashboard = () => {
     }
 
     const filterData =()=>{
-        const newData = dataCard.filter(item=>{
+        const newData = data.filter(item=>{
             return item.jobTitle == searchValue
         })
-        setDataCard(newData)
+        setData(newData)
     }
 
     const resetData=()=>{
-        setDataCard(data)
+        setData(data)
         setSearchValue("")
     }
     const setValue=(value:string)=>{
@@ -105,8 +107,8 @@ const Dashboard = () => {
 
     return (
         <>
-            <Filter />
-            <CreateForm setOpen={setOpen} open={open} setDataCard={setDataCard}/>
+            <Filter setOpen={setFilterOpen} open={filterOpen} data={data} setData={setData} />
+            <CreateForm setOpen={setOpen} open={open} setData={setData}/>
             <Row  gutter={[0,10]} className={`${styles.my1} ${styles.mx1}`}>
                 <Col span={24}>
                     <Row gutter={[0,10]} justify={"space-between"}>
@@ -115,7 +117,7 @@ const Dashboard = () => {
                                 <AutoComplete onChange={setValue} allowClear value={searchValue} onSearch={onSearch} onSelect={onSelectItem} options={options} filterOption={true} style={{ width: xl?300:200 }} size={xs?"middle":"large"} placeholder="Search" />
                                 <Button onClick={filterData} size={xs?"middle":"large"} className={`${styles.dFlex} ${styles.justifyContentCenter} ${styles.alignItemsCenter}`}  type="primary" icon={<SearchOutlined className={styles.navBarIconMenu} />} />
                                 <Button onClick={resetData} size={xs?"middle":"large"} className={`${styles.dFlex} ${styles.justifyContentCenter} ${styles.alignItemsCenter} ${styles.secoundryButton}`} icon={<ReloadOutlined className={styles.navBarIconMenu} />} />
-                                <Button size={xs?"middle":"large"} className={(xs?` `:`${styles.ml1} `)+ `${styles.dFlex} ${styles.justifyContentCenter} ${styles.alignItemsCenter} ${styles.secoundryButton} `} icon={<FilterOutlined />}>{xl?<span>{t("dashboard:filter")}</span>:""}</Button>
+                                <Button onClick={()=>setFilterOpen(true)} size={xs?"middle":"large"} className={(xs?` `:`${styles.ml1} `)+ `${styles.dFlex} ${styles.justifyContentCenter} ${styles.alignItemsCenter} ${styles.secoundryButton} `} icon={<FilterOutlined />}>{xl?<span>{t("dashboard:filter")}</span>:""}</Button>
                             </Space>
                         </Col>
                         <Col>
@@ -134,7 +136,7 @@ const Dashboard = () => {
                         </Col>
                     </Row>
                 </Col>
-                {dataCard.map(item=>{
+                {data.map(item=>{
                     return (
                         <Col key={`job-col-${item.id}`} span={24}>
                             <JobCard key={`job-card-${item.id}`} {...getData(
