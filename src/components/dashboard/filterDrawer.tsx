@@ -1,17 +1,18 @@
 import * as React from 'react';
-import {CloseOutlined, MinusOutlined, PlusOutlined,ReloadOutlined} from "@ant-design/icons"
+import {CloseOutlined, MinusOutlined, PlusOutlined,ReloadOutlined,CalendarOutlined} from "@ant-design/icons"
 import { Checkbox, Col, DrawerProps, Form, RadioChangeEvent, Row } from 'antd';
-import { Button, Drawer, Radio, Space, Collapse } from 'antd';
+import { Button, Drawer, Radio, DatePicker, Collapse } from 'antd';
+import type { DatePickerProps } from 'antd';
 import d from "@/data.json"
 import styles from "@/styles/filterDrawer.module.scss"
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { dataType } from '@/types/dataType';
 const { Panel } = Collapse;
 
-const DrawerItems = ["sector","functional Area","Job Type","by users"]
+const DrawerItems = ["sector","functional Area","published date","end date","Job Type","by users"]
 type items ="sector"|"functionalarea"|"jobType"
 const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Dispatch<React.SetStateAction<dataType>>,open:boolean,setOpen:React.Dispatch<React.SetStateAction<boolean>>}) => {
-  const [checked,setChecked]= React.useState<string[]>()
+  const [checked,setChecked]= React.useState<string[]>([])
   React.useEffect(()=>{
     console.log(`Checked : ${checked}`)
     checked?.length ==0 ?
@@ -36,29 +37,9 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
   }
   console.log("cc = " + checked)
   const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
-    console.log(checkedValues)
+    console.log("check value after delete date?",checkedValues)
      setChecked(checkedValues as string[])
-    // ["s.1","s.2","b.1","b.2"] => [{"s":["1","2"]}, {"b":["1","2"]}]
-    // checkedValues.map(checked=>
-      //   if(checked.item == "sector"){
-      //     setChecked(i=>i.find(n=>(n == checked.value))? i:[...i,checked.value] )
-      //     setData(i=>i.filter(d=>d.sector == checked.value))
-      //   }else if(checked.item == "functionalarea"){
-      //     setChecked(i=>i.find(n=>n == checked.value)? i:[...i,checked.value] )
-      //     setData(i=>i.filter(d=>d.functionalarea == checked.value))
-      //   }else if(checked.item == "by users"){
-      //     setData(i=>i.filter(d=>d.hiringManagers.find(f=>f == checked.user)== checked.user))
-      //     console.log("test?")
-      //   }
-      // }
       console.log(checked)
-  // )
-      // checked?.map(item=>{
-      //   const [key,value]= item.split(".")
-      //   console.log(`KEY: ${key}`)
-      //   console.log(value)
-      //   setData(d=>d.filter(data=>data[key] == value))
-      // })
     }
   const renderData  = (item:string)=>{
       switch(item){
@@ -67,7 +48,14 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
           case "Job Type":return getData("jobType")
       }
   }
-  
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log("Length: --:",dateString.length)
+    data.map(i=>console.log("TEst: ",i.published_date,"---: ", new Date(i.published_date).getTime() >= new Date(dateString).getTime()))
+    dateString.length !=0? 
+    setData(d=>d.filter(i=>new Date(i.published_date).getTime() >= new Date(dateString).getTime()))
+    :
+    onChangeCheckBox(checked as CheckboxValueType[])
+  };
   const getData = (type:items)=>{
       return data.reduce((set, item) => {
           const count =  data.filter(i=>
@@ -121,6 +109,10 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
                     <Row>
                         {
                           renderData(item)
+                        }
+                        {
+                          (item=="published date") &&
+                          <DatePicker  onChange={onChange} format={'YYYY-MM-DD'} suffixIcon={<CalendarOutlined className={styles.primaryColor} />}  />
                         }
                         {
                             (item=="by users") && 
