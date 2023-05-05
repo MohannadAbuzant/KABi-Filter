@@ -14,14 +14,14 @@ const DrawerItems = ["sector","functional Area","published date","end date","Job
 type items ="sector"|"functionalarea"|"jobType"
 const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Dispatch<React.SetStateAction<dataType>>,open:boolean,setOpen:React.Dispatch<React.SetStateAction<boolean>>}) => {
   const router = useRouter();
-  const [checked,setChecked]= React.useState<string[]>(Array.isArray(router.query.checked)? router.query.checked  as string[]: Array(router.query.checked) as string[]|| [])
+  const [checked,setChecked]= React.useState<string[]>(router.query.checked?Array.isArray(router.query.checked)? router.query.checked  as string[]: Array(router.query.checked) as string[]: [])
   React.useEffect(()=>{
+    checked?.length ==0 ?
+    setData(d)
+    :
     router.query.checked = checked
     router.push(router)
     console.log(router.query.checked)
-    checked?.length ==0 ?
-      setData(d)
-      :
           setData(d)
           checked?.map(item=>{
             const [key,value]= item.split(".")
@@ -91,6 +91,7 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
     },[{user:"",count:0}])
 
   }
+  console.log(router.query.ch)
     return ( 
         <Drawer
         title="Basic Drawer"
