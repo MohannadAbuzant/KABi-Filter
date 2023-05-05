@@ -1,30 +1,33 @@
 import * as React from 'react';
 import {CloseOutlined, MinusOutlined, PlusOutlined,ReloadOutlined,CalendarOutlined} from "@ant-design/icons"
-import { Checkbox, Col, DrawerProps, Form, RadioChangeEvent, Row } from 'antd';
+import { Checkbox, Col,Row } from 'antd';
 import { Button, Drawer, Radio, DatePicker, Collapse } from 'antd';
 import type { DatePickerProps } from 'antd';
 import d from "@/data.json"
 import styles from "@/styles/filterDrawer.module.scss"
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { dataType } from '@/types/dataType';
+import { useRouter } from 'next/router';
 const { Panel } = Collapse;
 
 const DrawerItems = ["sector","functional Area","published date","end date","Job Type","by users"]
 type items ="sector"|"functionalarea"|"jobType"
 const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Dispatch<React.SetStateAction<dataType>>,open:boolean,setOpen:React.Dispatch<React.SetStateAction<boolean>>}) => {
-  const [checked,setChecked]= React.useState<string[]>([])
+  const router = useRouter();
+  const [checked,setChecked]= React.useState<string[]>(Array.isArray(router.query.checked)? router.query.checked  as string[]: Array(router.query.checked) as string[]|| [])
   React.useEffect(()=>{
-    console.log(`Checked : ${checked}`)
+    router.query.checked = checked
+    router.push(router)
+    console.log(router.query.checked)
     checked?.length ==0 ?
       setData(d)
       :
           setData(d)
           checked?.map(item=>{
             const [key,value]= item.split(".")
-            console.log(`KEY: ${key}`)
-            console.log(`Value: ${value}`)
             if(key !== "by users"){
             setData(data=>data.filter(data=>data[key] == value))
+            
           }else{
             setData(data=>data.filter(data=>data.hiringManagers.find(i=>i==value) == value))
           }
@@ -33,13 +36,10 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
   const handelReset = ()=>{
     setChecked([])
     setData(d)
-
   }
-  console.log("cc = " + checked)
   const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
-    console.log("check value after delete date?",checkedValues)
      setChecked(checkedValues as string[])
-      console.log(checked)
+
     }
   const renderData  = (item:string)=>{
       switch(item){
@@ -50,7 +50,7 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
   }
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log("Length: --:",dateString.length)
-    data.map(i=>console.log("TEst: ",i.published_date,"---: ", new Date(i.published_date).getTime() >= new Date(dateString).getTime()))
+    // data.map(i=>console.log("TEst: ",i.published_date,"---: ", new Date(i.published_date).getTime() >= new Date(dateString).getTime()))
     dateString.length !=0? 
     setData(d=>d.filter(i=>new Date(i.published_date).getTime() >= new Date(dateString).getTime()))
     :
@@ -61,7 +61,13 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
           const count =  data.filter(i=>
                i[type] == item[type]
           ).length
-  
+
+        //  const items =  checked.reduce((data,item)=>{
+        //     const [key,value] = item.split(".")
+        //     data.filter(item => item.type == key).length == 0  && data.push({type:key,item:value})
+        //     return data
+        // },[{type:"",item:""}]).map(i=>i.type)
+          
           set.filter(i=>item[type] == i.type).length == 0 &&
           set.push({type:item[type],count:count})
            return set;
