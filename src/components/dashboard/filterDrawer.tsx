@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {CloseOutlined, MinusOutlined, PlusOutlined,ReloadOutlined,CalendarOutlined} from "@ant-design/icons"
 import { Checkbox, Col,Row } from 'antd';
-import { Button, Drawer, Radio, DatePicker, Collapse } from 'antd';
+import { Button, Drawer,DatePicker, Collapse } from 'antd';
 import type { DatePickerProps } from 'antd';
 import d from "@/data.json"
 import styles from "@/styles/filterDrawer.module.scss"
@@ -16,22 +16,30 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
   const router = useRouter();
   const [checked,setChecked]= React.useState<string[]>(router.query.checked?Array.isArray(router.query.checked)? router.query.checked  as string[]: Array(router.query.checked) as string[]: [])
   React.useEffect(()=>{
+    router.query.checked = checked
+    router.push(router)
     checked?.length ==0 ?
     setData(d)
     :
-    router.query.checked = checked
-    router.push(router)
-    console.log(router.query.checked)
           setData(d)
-          checked?.map(item=>{
-            const [key,value]= item.split(".")
-            if(key !== "by users"){
-            setData(data=>data.filter(data=>data[key] == value))
-            
-          }else{
-            setData(data=>data.filter(data=>data.hiringManagers.find(i=>i==value) == value))
+          const filterValues=checked.reduce((arr,item)=>{
+            const [key,value]= item.split(".")  
+            if(key=="sector"){
+              arr.sector.push(value)
+            }else if(key=="functionalarea"){
+              arr.functionalarea.push(value)
+            }else if(key=="jobType") {
+              arr.jobType.push(value)
+            }else if(key=="by users"){
+              arr.users.push(value)
+            }
+            return arr
+          },{sector:[],functionalarea:[],jobType:[],users:[]})
+          console.log("ABD", Object.entries(filterValues))
+          for (const [key, value] of Object.entries(filterValues)) {
+            if(value.length>0 && key != "users") {setData(d=>d.filter(item=>value.includes(item[key])))} 
+            if(value.length>0 && key == "users") {setData(d=>d.filter(item=>value.every(i=>item.hiringManagers.includes(i))))}
           }
-      })
   },[checked])
   const handelReset = ()=>{
     setChecked([])
@@ -49,25 +57,16 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
       }
   }
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log("Length: --:",dateString.length)
-    // data.map(i=>console.log("TEst: ",i.published_date,"---: ", new Date(i.published_date).getTime() >= new Date(dateString).getTime()))
     dateString.length !=0? 
     setData(d=>d.filter(i=>new Date(i.published_date).getTime() >= new Date(dateString).getTime()))
     :
     onChangeCheckBox(checked as CheckboxValueType[])
   };
   const getData = (type:items)=>{
-      return data.reduce((set, item) => {
-          const count =  data.filter(i=>
-               i[type] == item[type]
-          ).length
-
-        //  const items =  checked.reduce((data,item)=>{
-        //     const [key,value] = item.split(".")
-        //     data.filter(item => item.type == key).length == 0  && data.push({type:key,item:value})
-        //     return data
-        // },[{type:"",item:""}]).map(i=>i.type)
-          
+      return d.reduce((set, item) => {
+         const count= data.filter(i=>
+            i[type] == item[type]
+       ).length
           set.filter(i=>item[type] == i.type).length == 0 &&
           set.push({type:item[type],count:count})
            return set;
@@ -80,7 +79,7 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
   }
   const getUsers=()=>{
     const users:string[] = []
-    data.map(item=>item.hiringManagers.map(user=>users.push(user)))
+    d.map(item=>item.hiringManagers.map(user=>users.push(user)))
     return users
   }
   const getUserscount = ()=>{
@@ -91,7 +90,6 @@ const Filter = ({data, setData,open,setOpen} : {data:dataType,setData:React.Disp
     },[{user:"",count:0}])
 
   }
-  console.log(router.query.ch)
     return ( 
         <Drawer
         title="Basic Drawer"
