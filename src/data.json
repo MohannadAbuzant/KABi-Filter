@@ -1,0 +1,85 @@
+[
+    {
+        "id":"1",
+        "jobTitle": "Product manager",
+        "reqType": "blabla bla",
+        "reqStatus":true,
+        "orgStructure" : "Sadeq org",
+        "Units" : ["unit1","unit2"],
+        "hiringManagers": ["Omar", "MAzen"],
+        "vacanciesBudget":1,
+        "vacanciesOpen":1,
+        "vacanciesField":0,
+        "sector":"Administration",
+        "functionalarea":"Production",
+        "jobType":"full time",
+        "published_date":"2023-04-10"
+
+    },
+    {
+        "id":"2",
+        "jobTitle": "Product manager",
+        "reqType": "new Vacancy",
+        "reqStatus":false,
+        "orgStructure" : "Sadeq org",
+        "Units" : ["unit1","unit2"],
+        "hiringManagers": ["abdfawwaz", "ahmadjallad"],
+        "vacanciesBudget":1,
+        "vacanciesOpen":1,
+        "vacanciesField":0,
+        "sector":"Retail",
+        "functionalarea":"FreeLancing",
+        "jobType":"full time",
+        "published_date":"2023-03-10"
+    },
+        {
+        "id":"3",
+        "jobTitle": "Product manager",
+        "reqType": "new Vacancy",
+        "reqStatus":false,
+        "orgStructure" : "Sadeq org",
+        "Units" : ["unit1","unit2"],
+        "hiringManagers": ["abdfawwaz", "ahmadjallad"],
+        "vacanciesBudget":1,
+        "vacanciesOpen":1,
+        "vacanciesField":0,
+        "sector":"Computer Software",
+        "functionalarea":"Human Resources",
+        "jobType":"part time",
+        "published_date":"2023-04-05"
+    },
+    {
+        "id":"4",
+        "jobTitle": "Product manager",
+        "reqType": "blabla bla",
+        "reqStatus":true,
+        "orgStructure" : "Sadeq org",
+        "Units" : ["unit1","unit2"],
+        "hiringManagers": ["osama", "MAzen"],
+        "vacanciesBudget":1,
+        "vacanciesOpen":1,
+        "vacanciesField":0,
+        "sector":"Administration",
+        "functionalarea":"Production",
+        "jobType":"full time",
+        "published_date":"2023-04-10"
+
+    },
+    {
+        "id":"5",
+        "jobTitle": "Product manager",
+        "reqType": "blabla bla",
+        "reqStatus":true,
+        "orgStructure" : "Sadeq org",
+        "Units" : ["unit1","unit2"],
+        "hiringManagers": ["Omar", "MAzen"],
+        "vacanciesBudget":1,
+        "vacanciesOpen":1,
+        "vacanciesField":0,
+        "sector":"aaa",
+        "functionalarea":"Production",
+        "jobType":"full time",
+        "published_date":"2023-04-10"
+
+    }
+]
